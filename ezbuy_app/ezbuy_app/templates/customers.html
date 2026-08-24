@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Customers{% endblock %}
+{% block content %}
+<h1>Customers</h1>
+<div class="panel">
+  <h2>Add Customer</h2>
+  <form method="post" class="form-grid">
+    <div><label>Name</label><input type="text" name="name" required></div>
+    <div><label>Phone</label><input type="text" name="phone"></div>
+    <div><label>Email</label><input type="email" name="email"></div>
+    <div class="full"><label>Address</label><input type="text" name="address"></div>
+    <div><button type="submit">Add Customer</button></div>
+  </form>
+</div>
+<div class="panel">
+  <h2>All Customers</h2>
+  <table>
+    <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th></th></tr></thead>
+    <tbody>
+      {% for c in customers %}
+      <tr>
+        <td>{{ c.name }}</td>
+        <td>{{ c.phone or '—' }}</td>
+        <td>{{ c.email or '—' }}</td>
+        <td>
+          <form method="post" action="{{ url_for('delete_customer', cid=c.id) }}" onsubmit="return confirm('Delete this customer?');">
+            <button type="submit" class="btn-sm danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="4" class="muted">No customers yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
