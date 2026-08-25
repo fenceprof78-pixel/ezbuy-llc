@@ -1,1 +1,18 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
+:root {
+  --font-display: "Sora", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --grad-brand: linear-gradient(135deg, #7C3AED 0%, #DB2777 100%);
+  --grad-brand-soft: linear-gradient(135deg, #7C3AED15 0%, #DB277715 100%);
+}
+
+body {
+  font-family: var(--font-body);
+  background: #F8F7FC;
+}
+
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+}
