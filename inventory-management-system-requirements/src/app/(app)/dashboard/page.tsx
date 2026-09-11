@@ -4,6 +4,19 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Card, StatCard, Spinner, TxnBadge, EmptyState, btnPrimary, btnGhost, Th, Td } from "@/components/ui";
 import { money, fmtDateTime, fmtNumber } from "@/lib/format";
+import {
+  Plus,
+  PackagePlus,
+  ShoppingCart,
+  ClipboardList,
+  Package,
+  Wallet,
+  Clock,
+  AlertTriangle,
+  Receipt,
+  Factory,
+  Users,
+} from "lucide-react";
 
 type DashData = {
   stats: {
@@ -49,27 +62,35 @@ export default function DashboardPage() {
           <p className="mt-0.5 text-sm text-slate-500">A live overview of EZBUY operations</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          <Link href="/products" className={btnGhost}>＋ Add Product</Link>
-          <Link href="/inventory/new" className={btnGhost}>📥 Receive Stock</Link>
-          <Link href="/sales/new" className={btnGhost}>🛒 Create Sale</Link>
-          <Link href="/purchases/new" className={btnPrimary}>📥 Purchase Order</Link>
+          <Link href="/products" className={`${btnGhost} gap-1.5`}>
+            <Plus className="h-4 w-4" strokeWidth={2} /> Add Product
+          </Link>
+          <Link href="/inventory/new" className={`${btnGhost} gap-1.5`}>
+            <PackagePlus className="h-4 w-4" strokeWidth={2} /> Receive Stock
+          </Link>
+          <Link href="/sales/new" className={`${btnGhost} gap-1.5`}>
+            <ShoppingCart className="h-4 w-4" strokeWidth={2} /> Create Sale
+          </Link>
+          <Link href="/purchases/new" className={`${btnPrimary} gap-1.5`}>
+            <ClipboardList className="h-4 w-4" strokeWidth={2} /> Purchase Order
+          </Link>
         </div>
       </div>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
-        <StatCard label="Products" value={fmtNumber(s.totalProducts)} icon="📦" accent="indigo" sub={`${s.warehouses} warehouses`} />
-        <StatCard label="Stock Value" value={money(s.stockValue)} icon="💰" accent="green" sub={`${fmtNumber(s.totalStock)} units`} />
-        <StatCard label="Total Sales" value={money(s.totalSales)} icon="🛒" accent="sky" />
-        <StatCard label="Total Purchases" value={money(s.totalPurchases)} icon="📥" accent="amber" />
-        <StatCard label="Outstanding" value={money(s.totalOutstanding)} icon="⏳" accent="red" sub="Sales + purchases" />
-        <StatCard label="Low Stock" value={fmtNumber(s.lowStockCount)} icon="⚠️" accent="amber" sub="At or below reorder level" />
+        <StatCard label="Products" value={fmtNumber(s.totalProducts)} icon={Package} accent="indigo" sub={`${s.warehouses} warehouses`} />
+        <StatCard label="Stock Value" value={money(s.stockValue)} icon={Wallet} accent="green" sub={`${fmtNumber(s.totalStock)} units`} />
+        <StatCard label="Total Sales" value={money(s.totalSales)} icon={ShoppingCart} accent="sky" />
+        <StatCard label="Total Purchases" value={money(s.totalPurchases)} icon={PackagePlus} accent="amber" />
+        <StatCard label="Outstanding" value={money(s.totalOutstanding)} icon={Clock} accent="red" sub="Sales + purchases" />
+        <StatCard label="Low Stock" value={fmtNumber(s.lowStockCount)} icon={AlertTriangle} accent="amber" sub="At or below reorder level" />
       </div>
 
       <div className="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-3">
         <Card className="xl:col-span-2">
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
             <h2 className="font-bold text-slate-900">Recent Activity</h2>
-            <Link href="/inventory" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+            <Link href="/inventory" className="text-sm font-medium text-blue-600 hover:text-blue-700">
               View all →
             </Link>
           </div>
@@ -108,12 +129,12 @@ export default function DashboardPage() {
         <Card>
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
             <h2 className="font-bold text-slate-900">Low Stock Alerts</h2>
-            <Link href="/reports?tab=lowstock" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+            <Link href="/reports?tab=lowstock" className="text-sm font-medium text-blue-600 hover:text-blue-700">
               Report →
             </Link>
           </div>
           {data.lowStock.length === 0 ? (
-            <EmptyState message="All products well stocked 🎉" />
+            <EmptyState message="All products well stocked" />
           ) : (
             <ul className="divide-y divide-slate-100">
               {data.lowStock.map((p) => (
@@ -139,7 +160,7 @@ export default function DashboardPage() {
         <Card className="xl:col-span-2">
           <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4">
             <h2 className="font-bold text-slate-900">Latest Invoices</h2>
-            <Link href="/sales" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+            <Link href="/sales" className="text-sm font-medium text-blue-600 hover:text-blue-700">
               Sales →
             </Link>
           </div>
@@ -177,14 +198,14 @@ export default function DashboardPage() {
                 <p className="text-xs font-semibold uppercase text-rose-500">Customers owe</p>
                 <p className="text-lg font-bold text-rose-700">{money(s.salesOutstanding)}</p>
               </div>
-              <span className="text-2xl">🧾</span>
+              <Receipt className="h-6 w-6 text-rose-400" strokeWidth={1.75} />
             </div>
             <div className="flex items-center justify-between rounded-lg bg-amber-50 px-4 py-3">
               <div>
                 <p className="text-xs font-semibold uppercase text-amber-600">We owe suppliers</p>
                 <p className="text-lg font-bold text-amber-700">{money(s.purchasesOutstanding)}</p>
               </div>
-              <span className="text-2xl">🏭</span>
+              <Factory className="h-6 w-6 text-amber-500" strokeWidth={1.75} />
             </div>
             <div className="flex items-center justify-between rounded-lg bg-emerald-50 px-4 py-3">
               <div>
@@ -193,7 +214,7 @@ export default function DashboardPage() {
                   {fmtNumber(s.customers)} customers · {fmtNumber(s.suppliers)} suppliers
                 </p>
               </div>
-              <span className="text-2xl">👥</span>
+              <Users className="h-6 w-6 text-emerald-500" strokeWidth={1.75} />
             </div>
           </div>
         </Card>
