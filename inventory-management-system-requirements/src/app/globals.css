@@ -5,13 +5,13 @@
 :root {
   --font-display: "Sora", sans-serif;
   --font-body: "Inter", sans-serif;
-  --grad-brand: linear-gradient(135deg, #7C3AED 0%, #DB2777 100%);
-  --grad-brand-soft: linear-gradient(135deg, #7C3AED15 0%, #DB277715 100%);
+  --grad-brand: linear-gradient(135deg, #0F172A 0%, #1E3A8A 100%);
+  --grad-brand-soft: linear-gradient(135deg, #0F172A12 0%, #1E3A8A12 100%);
 }
 
 body {
   font-family: var(--font-body);
-  background: #F8F7FC;
+  background: #F8FAFC;
 }
 
 h1, h2, h3, .font-display {
