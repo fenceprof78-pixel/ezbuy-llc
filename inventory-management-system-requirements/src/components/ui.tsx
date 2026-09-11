@@ -1,6 +1,6 @@
 "use client";
 
-import type { ReactNode, InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
+import type { ReactNode, ElementType, InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { X, Inbox } from "lucide-react";
 
 // ─── Class presets ────────────────────────────────────────────────────────────
@@ -60,13 +60,13 @@ export function StatCard({
   label,
   value,
   sub,
-  icon,
+  icon: Icon,
   accent = "indigo",
 }: {
   label: string;
   value: string;
   sub?: string;
-  icon: string;
+  icon: ElementType;
   accent?: keyof typeof statAccents;
 }) {
   return (
@@ -77,8 +77,8 @@ export function StatCard({
           <p className="mt-1 truncate text-2xl font-bold text-slate-900">{value}</p>
           {sub && <p className="mt-1 text-xs text-slate-500">{sub}</p>}
         </div>
-        <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-lg shadow-md shadow-blue-900/20 ${statAccents[accent] ?? statAccents.indigo}`}>
-          {icon}
+        <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl shadow-md shadow-blue-900/20 ${statAccents[accent] ?? statAccents.indigo}`}>
+          <Icon className="h-5 w-5" strokeWidth={2} />
         </div>
       </div>
     </Card>
