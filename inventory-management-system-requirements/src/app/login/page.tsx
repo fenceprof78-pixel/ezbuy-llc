@@ -4,14 +4,7 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
 import { Input, Field, btnPrimary } from "@/components/ui";
-
-const DEMO_ACCOUNTS = [
-  { role: "Admin", email: "admin@ezbuy.com", password: "admin123" },
-  { role: "Manager", email: "manager@ezbuy.com", password: "manager123" },
-  { role: "Sales", email: "sales@ezbuy.com", password: "sales123" },
-  { role: "Inventory", email: "inv@ezbuy.com", password: "inv123" },
-  { role: "Accountant", email: "acct@ezbuy.com", password: "acct123" },
-];
+import { Boxes } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -46,11 +39,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-6">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-6">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-500 text-3xl shadow-xl shadow-indigo-500/40">
-            📦
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[image:var(--grad-brand)] shadow-xl shadow-blue-900/40">
+            <Boxes className="h-8 w-8 text-white" strokeWidth={2} />
           </div>
           <h1 className="text-3xl font-extrabold tracking-tight text-white">EZBUY</h1>
           <p className="mt-1 text-sm text-slate-400">Inventory Management System</p>
@@ -89,27 +82,6 @@ export default function LoginPage() {
             </button>
           </div>
         </form>
-
-        <div className="mt-6 rounded-xl border border-slate-700/50 bg-slate-800/50 p-4">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-            Demo accounts (click to fill)
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {DEMO_ACCOUNTS.map((a) => (
-              <button
-                key={a.email}
-                onClick={() => {
-                  setEmail(a.email);
-                  setPassword(a.password);
-                  setError("");
-                }}
-                className="rounded-lg border border-slate-600 bg-slate-700/60 px-3 py-1.5 text-xs font-medium text-slate-200 transition hover:bg-slate-600"
-              >
-                {a.role}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );
