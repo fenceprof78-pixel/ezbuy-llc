@@ -55,6 +55,18 @@ export default function UsersPage() {
     load();
   };
 
+  const remove = async (id: number) => {
+    if (!confirm("Delete this user? This cannot be undone.")) return;
+    const res = await fetch("/api/users", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+    const data = await res.json();
+    if (!res.ok) { alert(data.error || "Delete failed"); return; }
+    load();
+  };
+
   if (!isAdmin) {
     return <Card className="p-8 text-center text-slate-500">Admin access required to manage users.</Card>;
   }
@@ -94,7 +106,7 @@ export default function UsersPage() {
                     <select
                       value={u.role}
                       onChange={(e) => update(u.id, { role: e.target.value })}
-                      className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-medium outline-none focus:border-indigo-500"
+                      className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-medium outline-none focus:border-blue-500"
                     >
                       {ROLES.map((r) => <option key={r} value={r}>{r}</option>)}
                     </select>
@@ -107,10 +119,18 @@ export default function UsersPage() {
                   <Td className="text-right">
                     <button
                       onClick={() => update(u.id, { active: !u.active })}
-                      className="rounded-lg px-2 py-1 text-xs font-semibold text-indigo-600 hover:bg-indigo-50"
+                      className="rounded-lg px-2 py-1 text-xs font-semibold text-blue-600 hover:bg-blue-50"
                     >
                       {u.active ? "Deactivate" : "Activate"}
                     </button>
+                    {u.id !== me?.id && (
+                      <button
+                        onClick={() => remove(u.id)}
+                        className="ml-1 rounded-lg px-2 py-1 text-xs font-semibold text-rose-600 hover:bg-rose-50"
+                      >
+                        Delete
+                      </button>
+                    )}
                   </Td>
                 </tr>
               ))}
