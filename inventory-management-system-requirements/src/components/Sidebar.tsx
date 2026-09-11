@@ -2,26 +2,40 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/components/AuthProvider";
+import {
+  LayoutDashboard,
+  Package,
+  Tags,
+  ClipboardList,
+  ShoppingCart,
+  ShoppingBag,
+  Users,
+  Factory,
+  Warehouse,
+  BarChart3,
+  UserCog,
+  Boxes,
+} from "lucide-react";
 
 type NavItem = {
   href: string;
   label: string;
-  icon: string;
+  icon: React.ElementType;
   adminOnly?: boolean;
 };
 
 const NAV: NavItem[] = [
-  { href: "/dashboard", label: "Dashboard", icon: "🏠" },
-  { href: "/products", label: "Products", icon: "📦" },
-  { href: "/catalog", label: "Categories & Brands", icon: "🏷️" },
-  { href: "/inventory", label: "Inventory", icon: "📊" },
-  { href: "/sales", label: "Sales", icon: "🛒" },
-  { href: "/purchases", label: "Purchases", icon: "📥" },
-  { href: "/customers", label: "Customers", icon: "🧑‍🤝‍🧑" },
-  { href: "/suppliers", label: "Suppliers", icon: "🏭" },
-  { href: "/warehouses", label: "Warehouses", icon: "🏢" },
-  { href: "/reports", label: "Reports", icon: "📈" },
-  { href: "/users", label: "Users", icon: "👤", adminOnly: true },
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/products", label: "Products", icon: Package },
+  { href: "/catalog", label: "Categories & Brands", icon: Tags },
+  { href: "/inventory", label: "Inventory", icon: ClipboardList },
+  { href: "/sales", label: "Sales", icon: ShoppingCart },
+  { href: "/purchases", label: "Purchases", icon: ShoppingBag },
+  { href: "/customers", label: "Customers", icon: Users },
+  { href: "/suppliers", label: "Suppliers", icon: Factory },
+  { href: "/warehouses", label: "Warehouses", icon: Warehouse },
+  { href: "/reports", label: "Reports", icon: BarChart3 },
+  { href: "/users", label: "Users", icon: UserCog, adminOnly: true },
 ];
 
 export default function Sidebar({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -37,18 +51,18 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
         />
       )}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-60 shrink-0 -translate-x-full flex-col bg-[#150F2E] text-slate-300 transition-transform duration-200 md:sticky md:top-0 md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-50 flex h-screen w-60 shrink-0 -translate-x-full flex-col bg-[#0F172A] text-slate-300 transition-transform duration-200 md:sticky md:top-0 md:translate-x-0 ${
           open ? "translate-x-0" : ""
         }`}
       >
         <div className="flex items-center justify-between px-5 py-5">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[image:var(--grad-brand)] text-lg shadow-lg shadow-fuchsia-500/30">
-              📦
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[image:var(--grad-brand)] text-white shadow-lg shadow-blue-900/30">
+              <Boxes className="h-5 w-5" strokeWidth={2} />
             </div>
             <div>
               <p className="font-display text-base font-extrabold tracking-tight text-white">EZBUY</p>
-              <p className="text-[10px] font-medium uppercase tracking-widest text-violet-300/60">
+              <p className="text-[10px] font-medium uppercase tracking-widest text-blue-300/60">
                 Inventory System
               </p>
             </div>
@@ -66,6 +80,7 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
         <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 pb-4">
           {NAV.filter((n) => !n.adminOnly || user?.role === "ADMIN").map((item) => {
             const active = pathname === item.href || pathname.startsWith(item.href + "/");
+            const Icon = item.icon;
             return (
               <Link
                 key={item.href}
@@ -73,11 +88,11 @@ export default function Sidebar({ open, onClose }: { open: boolean; onClose: () 
                 onClick={onClose}
                 className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
                   active
-                    ? "bg-[image:var(--grad-brand)] text-white shadow-md shadow-fuchsia-900/40"
+                    ? "bg-[image:var(--grad-brand)] text-white shadow-md shadow-blue-900/40"
                     : "text-slate-400 hover:bg-white/5 hover:text-white"
                 }`}
               >
-                <span className="text-base">{item.icon}</span>
+                <Icon className="h-[18px] w-[18px]" strokeWidth={2} />
                 {item.label}
               </Link>
             );
