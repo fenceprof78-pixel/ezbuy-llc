@@ -1,4 +1,4 @@
-\"use client";
+"use client";
 
 import type { ReactNode, InputHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { X, Inbox } from "lucide-react";
